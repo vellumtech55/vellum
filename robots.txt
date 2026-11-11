@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vellumtech55.github.io/vellum/sitemap.xml

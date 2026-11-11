@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Tools — Word Counter, Contrast Checker, JSON Formatter, Password Generator | Vellum Studio</title>
+<meta name="description" content="Free browser-based utilities from Vellum Studio: word &amp; character counter, WCAG color contrast checker, JSON formatter and validator, and password generator. No install, no account.">
+<meta property="og:title" content="Free Tools — Vellum Studio">
+<meta property="og:description" content="Word counter, color contrast checker, JSON formatter, and password generator — free, in your browser, no install.">
+<meta property="og:url" content="https://vellumtech55.github.io/vellum/tools.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://vellumtech55.github.io/vellum/tools.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMwZDEyMWIiLz4KICA8dGV4dCB4PSIzMiIgeT0iNDQiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhYWI1YzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlY8L3RleHQ+Cjwvc3ZnPgo=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,800;1,500&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink-950:#070a10;
+  --ink-900:#0d121b;
+  --ink-850:#121722;
+  --ink-800:#1a202c;
+  --line:rgba(233,238,245,.09);
+  --line-strong:rgba(233,238,245,.18);
+  --text:#e9eef5;
+  --text-dim:#98a1ad;
+  --text-faint:#7c8592;
+
+  --navy:#5a7fb8;
+  --navy-dim:rgba(90,127,184,.35);
+  --navy-bg:#10141f;
+
+  --copper:#d98255;
+  --copper-dim:rgba(217,130,85,.35);
+  --copper-bg:#1c130c;
+
+  --teal:#33b8b0;
+  --teal-dim:rgba(51,184,176,.35);
+  --teal-bg:#0b1817;
+
+  --silver:#aab5c4;
+  --silver-dim:rgba(170,181,196,.35);
+  --silver-bg:#14171c;
+
+  --font-display:'Fraunces',serif;
+  --font-body:'Inter',sans-serif;
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--ink-950);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+.bg-glow{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+}
+.bg-glow::before{
+  content:"";
+  position:absolute;
+  width:900px;
+  height:900px;
+  border-radius:50%;
+  filter:blur(170px);
+  background:rgba(90,127,184,.16);
+  animation:float 18s ease-in-out infinite;
+}
+.bg-glow.copper::before{ background:rgba(217,130,85,.18); }
+.bg-glow.teal::before{ background:rgba(51,184,176,.14); }
+.bg-glow.silver::before { background:rgba(170,181,196,.16); }
+
+@keyframes float{
+  0%  {transform:translate(-10%,-10%) scale(1)}
+  50% {transform:translate(35%,20%) scale(1.25)}
+  100%{transform:translate(-10%,-10%) scale(1)}
+}
+
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  opacity:.06;
+  background-image:
+    linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:45px 45px;
+}
+
+.grain{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:180px 180px;
+}
+
+.deckle{
+  height:16px;
+  width:100%;
+  background-color:var(--ink-950);
+  background-image:
+    linear-gradient(135deg, var(--ink-900) 50%, transparent 50%),
+    linear-gradient(-135deg, var(--ink-900) 50%, transparent 50%);
+  background-position:0 0,0 0;
+  background-size:16px 16px;
+  background-repeat:repeat-x;
+}
+
+header{
+  text-align:center;
+  padding:110px 20px 0;
+  background:var(--ink-900);
+}
+
+.eyebrow{
+  font-size:.78rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--navy);
+  font-weight:600;
+  margin-bottom:14px;
+}
+
+header h1{
+  font-family:var(--font-display);
+  font-size:4.2rem;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+header h1 a{
+  color:inherit;
+  text-decoration:none;
+}
+
+header p.tagline{
+  color:var(--text-dim);
+  margin-top:10px;
+  font-size:1.05rem;
+  font-family:var(--font-display);
+  font-style:italic;
+}
+
+.hero{
+  max-width:780px;
+  margin:36px auto 0;
+  padding:30px 34px;
+  border-radius:4px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  text-align:left;
+}
+
+.hero h2{font-size:.78rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:10px;font-weight:600}
+.hero h3{font-family:var(--font-display);font-size:1.5rem;margin-bottom:10px;font-weight:600}
+.hero p{color:var(--text-dim);font-size:.95rem;line-height:1.6}
+
+header .deckle-spacer{ height:48px; }
+
+nav{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:16px 20px;
+  position:sticky;
+  top:0;
+  backdrop-filter:blur(14px);
+  background:rgba(8,9,11,.78);
+  z-index:10;
+  border-bottom:1px solid var(--line);
+}
+
+.nav-link{
+  padding:10px 18px;
+  border-radius:8px;
+  border:1px solid var(--line-strong);
+  background:var(--ink-850);
+  color:var(--text-dim);
+  cursor:pointer;
+  transition:.2s;
+  font-size:.88rem;
+  font-weight:600;
+  font-family:var(--font-body);
+  text-decoration:none;
+  display:inline-block;
+}
+
+.nav-link:hover{
+  transform:translateY(-1px);
+  color:var(--text);
+  border-color:var(--text-faint);
+}
+
+.nav-link.active{ background:var(--ink-800); }
+.nav-link.active[data-accent="navy"]   { border-color:var(--navy);    color:var(--navy);    box-shadow:0 0 16px var(--navy-dim); }
+.nav-link.active[data-accent="copper"]{ border-color:var(--copper); color:var(--copper); box-shadow:0 0 16px var(--copper-dim); }
+.nav-link.active[data-accent="teal"]{ border-color:var(--teal); color:var(--teal); box-shadow:0 0 16px var(--teal-dim); }
+.nav-link.active[data-accent="silver"] { border-color:var(--silver);  color:var(--silver);  box-shadow:0 0 16px var(--silver-dim); }
+
+main{
+  max-width:1180px;
+  margin:auto;
+  padding:54px 22px 84px;
+  animation:.3s fade ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to  {opacity:1;transform:translateY(0)}
+}
+
+.section-title{
+  font-family:var(--font-display);
+  font-size:2rem;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.section-sub{
+  color:var(--text-dim);
+  font-size:.95rem;
+  margin-bottom:30px;
+  max-width:560px;
+}
+
+.grid-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-top:4px;
+}
+
+.card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:24px;
+  transition:.22s;
+}
+.card:hover{ transform:translateY(-4px); border-color:var(--line-strong); }
+
+.theme-navy .card:hover    { border-color:var(--navy);    box-shadow:0 0 22px rgba(90,127,184,.14); }
+.theme-copper .card:hover { border-color:var(--copper); box-shadow:0 0 22px rgba(217,130,85,.16); }
+.theme-teal .card:hover { border-color:var(--teal); box-shadow:0 0 22px rgba(51,184,176,.14); }
+.theme-silver .card:hover  { border-color:var(--silver);  box-shadow:0 0 22px rgba(170,181,196,.16); }
+
+.card h3{ font-family:var(--font-display); font-size:1.18rem; font-weight:600; margin-bottom:8px; }
+.card p{ color:var(--text-dim); font-size:.92rem; line-height:1.55; }
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:5px;
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.badge.navy{ background:var(--navy-bg); color:var(--navy); }
+.badge.copper{ background:var(--copper-bg); color:var(--copper); }
+.badge.teal{ background:var(--teal-bg); color:var(--teal); }
+.badge.silver{ background:var(--silver-bg); color:var(--silver); }
+
+.stat-card h3{ font-family:var(--font-display); font-size:2.1rem; font-weight:700; margin-bottom:4px; }
+.stat-card p{ color:var(--text-faint); font-size:.85rem; }
+
+.main-btn{
+  display:inline-block;
+  margin-top:14px;
+  padding:10px 18px;
+  border-radius:7px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:.86rem;
+  cursor:pointer;
+  transition:.2s;
+  font-family:var(--font-body);
+  border:1px solid transparent;
+}
+.btn-navy   { background:transparent; color:var(--navy);    border-color:var(--navy); }
+.btn-navy:hover   { background:var(--navy);    color:#0d121b; }
+.btn-copper{ background:transparent; color:var(--copper); border-color:var(--copper); }
+.btn-copper:hover{ background:var(--copper); color:#1f1006; }
+.btn-teal{ background:transparent; color:var(--teal); border-color:var(--teal); }
+.btn-teal:hover{ background:var(--teal); color:#041615; }
+.btn-silver { background:transparent; color:var(--silver);  border-color:var(--silver); }
+.btn-silver:hover { background:var(--silver);  color:#12151a; }
+
+.roadmap{ display:flex; flex-direction:column; gap:12px; }
+.step{
+  padding:16px 20px;
+  border-left:3px solid var(--navy);
+  background:rgba(255,255,255,.03);
+  border-radius:6px;
+  font-size:.93rem;
+  color:var(--text-dim);
+}
+.step b{ color:var(--text); }
+
+form{ display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+input,textarea{
+  background:var(--ink-900);
+  border:1px solid var(--line-strong);
+  color:var(--text);
+  padding:13px 15px;
+  border-radius:7px;
+  font-size:.95rem;
+  font-family:var(--font-body);
+}
+textarea{ min-height:150px; resize:vertical; }
+input:focus,textarea:focus{ outline:none; border-color:var(--navy); }
+
+.legal-box{
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:26px;
+  line-height:1.75;
+  color:var(--text-faint);
+  font-size:.88rem;
+}
+.legal-box h3{ font-family:var(--font-display); color:var(--text-dim); margin-bottom:14px; }
+
+footer{
+  text-align:center;
+  padding:36px 20px;
+  color:var(--text-faint);
+  border-top:1px solid var(--line);
+  font-size:.85rem;
+}
+footer a{ color:var(--text-faint); }
+footer a:hover{ color:var(--navy); }
+
+.tool-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+.tool-card > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.tool-card > summary::-webkit-details-marker{ display:none; }
+.tool-card > summary .tool-meta h3{ font-family:var(--font-display); font-size:1.1rem; margin-bottom:4px; }
+.tool-card > summary .tool-meta p{ color:var(--text-dim); font-size:.88rem; }
+.tool-card > summary .chevron{ color:var(--silver); font-size:1.3rem; transition:.2s; flex-shrink:0; }
+.tool-card[open] > summary .chevron{ transform:rotate(45deg); }
+.tool-card[open]{ border-color:var(--silver); box-shadow:0 0 22px rgba(170,181,196,.13); }
+
+.tool-body{ padding:0 24px 26px; border-top:1px solid var(--line); padding-top:20px; }
+
+.tool-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+.tool-row label{ font-size:.82rem; color:var(--text-dim); display:flex; align-items:center; gap:6px; }
+.tool-stats{ display:flex; gap:22px; flex-wrap:wrap; margin-top:12px; }
+.tool-stats div{ font-size:.8rem; color:var(--text-faint); }
+.tool-stats span{ display:block; font-family:var(--font-display); font-size:1.4rem; color:var(--text); font-weight:600; }
+
+.tool-out{
+  background:var(--ink-950);
+  border:1px solid var(--line-strong);
+  border-radius:7px;
+  padding:14px 16px;
+  font-family:ui-monospace,monospace;
+  font-size:.85rem;
+  color:var(--text-dim);
+  white-space:pre-wrap;
+  word-break:break-word;
+  min-height:44px;
+}
+.tool-out.error{ color:var(--copper); }
+.tool-out.pass{ color:var(--teal); }
+
+.btn-small{
+  padding:8px 14px;
+  border-radius:6px;
+  border:1px solid var(--silver);
+  background:transparent;
+  color:var(--silver);
+  font-size:.83rem;
+  font-weight:600;
+  cursor:pointer;
+  font-family:var(--font-body);
+  transition:.2s;
+}
+.btn-small:hover{ background:var(--silver); color:#12151a; }
+
+.swatch-pair{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+.swatch-pair .pair-block{ display:flex; align-items:center; gap:8px; background:var(--ink-950); border:1px solid var(--line-strong); padding:8px 10px; border-radius:7px; }
+.swatch-pair input[type=color]{ width:34px; height:34px; border:none; border-radius:5px; background:none; cursor:pointer; padding:0; }
+.swatch-pair input[type=text]{ width:90px; padding:6px 8px; font-size:.82rem; }
+
+.preview-text{ margin-top:14px; padding:16px; border-radius:7px; font-size:1rem; font-weight:600; text-align:center; }
+
+.range-row{ display:flex; align-items:center; gap:10px; flex:1; min-width:180px; }
+.range-row input[type=range]{ flex:1; accent-color:var(--silver); }
+.checkbox-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px; }
+.checkbox-row label{ font-size:.85rem; color:var(--text-dim); display:flex; align-items:center; gap:6px; cursor:pointer; }
+
+.product-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  transition:.22s;
+}
+.product-card:hover{ transform:translateY(-2px); border-color:var(--line-strong); }
+
+.product-card > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:22px 24px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.product-card > summary::-webkit-details-marker{ display:none; }
+
+.product-summary-left{ flex:1; min-width:0; }
+.product-summary-left h3{ font-family:var(--font-display); font-size:1.18rem; font-weight:600; margin-bottom:6px; }
+.product-summary-left p{ color:var(--text-dim); font-size:.9rem; line-height:1.5; }
+
+.product-card .chevron{ font-size:1.3rem; transition:.2s; flex-shrink:0; color:var(--text-faint); margin-top:2px; }
+.product-card[open] .chevron{ transform:rotate(45deg); }
+
+.product-card--navy[open]   { border-color:var(--navy);    box-shadow:0 0 22px rgba(90,127,184,.14); }
+.product-card--navy .chevron{ color:var(--navy); }
+.product-card--copper[open]{ border-color:var(--copper); box-shadow:0 0 22px rgba(217,130,85,.16); }
+.product-card--copper .chevron{ color:var(--copper); }
+.product-card--teal[open]{ border-color:var(--teal); box-shadow:0 0 22px rgba(51,184,176,.14); }
+.product-card--teal .chevron{ color:var(--teal); }
+.product-card--silver[open] { border-color:var(--silver);  box-shadow:0 0 22px rgba(170,181,196,.16); }
+.product-card--silver .chevron{ color:var(--silver); }
+
+.product-body{ padding:0 24px 26px; border-top:1px solid var(--line); padding-top:20px; }
+.product-desc{ color:var(--text-dim); font-size:.92rem; line-height:1.6; margin-bottom:16px; }
+
+.feature-list{ list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.feature-list li{ font-size:.88rem; color:var(--text-dim); padding-left:22px; position:relative; line-height:1.5; }
+.feature-list li::before{ content:"✓"; position:absolute; left:0; font-weight:700; }
+.product-card--navy .feature-list li::before   { color:var(--navy); }
+.product-card--copper .feature-list li::before{ color:var(--copper); }
+.product-card--teal .feature-list li::before{ color:var(--teal); }
+.product-card--silver .feature-list li::before { color:var(--silver); }
+
+.product-meta-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; font-size:.8rem; color:var(--text-faint); }
+.product-meta-row .best-for b{ color:var(--text-dim); font-weight:600; }
+
+.about-header{ display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
+.about-intro{ flex:1; min-width:260px; }
+.about-intro h3{ font-family:var(--font-display); font-size:1.6rem; font-weight:600; margin-bottom:10px; }
+.about-intro p{ color:var(--text-dim); font-size:.95rem; line-height:1.65; margin-bottom:14px; }
+
+.tech-badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; margin-bottom:16px; }
+.tech-badge{ background:var(--ink-900); border:1px solid var(--line-strong); color:var(--text-dim); padding:6px 13px; border-radius:20px; font-size:.78rem; font-weight:600; }
+
+.social-links{ display:flex; flex-wrap:wrap; gap:10px; }
+.social-links a{ color:var(--text-dim); text-decoration:none; font-size:.86rem; font-weight:600; border:1px solid var(--line-strong); padding:9px 16px; border-radius:7px; transition:.2s; }
+.social-links a:hover{ border-color:var(--navy); color:var(--navy); }
+
+.notice-banner{ display:flex; align-items:center; gap:10px; border-radius:8px; padding:13px 18px; margin-bottom:24px; font-size:.86rem; color:var(--text-dim); border:1px solid; }
+.notice-banner a{ font-weight:700; text-decoration:none; }
+.notice-banner a:hover{ text-decoration:underline; }
+.notice-navy{ background:rgba(216,169,85,.07); border-color:rgba(216,169,85,.3); }
+.notice-navy a{ color:var(--navy); }
+.notice-copper{ background:rgba(217,130,85,.08); border-color:rgba(217,130,85,.3); }
+.notice-copper a{ color:var(--copper); }
+.notice-teal{ background:rgba(51,184,176,.08); border-color:rgba(43,214,163,.3); }
+.notice-teal a{ color:var(--teal); }
+
+.faq-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:32px; }
+.faq-item{ background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.faq-item summary{ list-style:none; cursor:pointer; padding:16px 20px; font-weight:600; font-size:.94rem; display:flex; justify-content:space-between; align-items:center; }
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary .chevron{ color:var(--navy); transition:.2s; }
+.faq-item[open] summary .chevron{ transform:rotate(45deg); }
+.faq-item p{ padding:0 20px 18px; color:var(--text-dim); font-size:.88rem; line-height:1.6; }
+
+.secret-mode{ filter:hue-rotate(180deg); }
+
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background:var(--navy);
+  color:#0d121b;
+  padding:10px 16px;
+  z-index:100;
+  border-radius:0 0 6px 0;
+  font-weight:600;
+  text-decoration:none;
+}
+.skip-link:focus{ left:0; }
+
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--navy);
+  outline-offset:2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .bg-glow::before{ animation:none; }
+  main{ animation:none; }
+}
+
+@media(max-width:680px){
+  header h1{ font-size:2.6rem; }
+  main{ padding:40px 16px 64px; }
+  .tool-card > summary{ padding:18px; }
+}
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="bg-glow silver" id="bg"></div>
+<div class="grid-bg"></div>
+<div class="grain"></div>
+
+<header>
+  <p class="eyebrow">Independent software &amp; tools</p>
+  <h1><a href="index.html">VELLUM STUDIO</a></h1>
+  <p class="tagline">Lightweight desktop software for creators, gamers &amp; developers.</p>
+  <div class="deckle-spacer"></div>
+</header>
+<div class="deckle"></div>
+
+<nav aria-label="Primary">
+  <a class="nav-link" data-accent="navy" href="index.html">Home</a>
+  <a class="nav-link" data-accent="navy" href="about.html">About Me</a>
+  <a class="nav-link active" data-accent="silver" href="tools.html">Free Tools</a>
+  <a class="nav-link" data-accent="navy" href="products.html">Products</a>
+  <a class="nav-link" data-accent="navy" href="membership.html">Membership</a>
+  <a class="nav-link" data-accent="copper" href="arcade.html">Arcade</a>
+  <a class="nav-link" data-accent="teal" href="game_assets.html">Game Assets</a>
+  <a class="nav-link" data-accent="navy" href="roadmap.html">Roadmap</a>
+  <a class="nav-link" data-accent="navy" href="fixes.html">Fixes and notes</a>
+  <a class="nav-link" data-accent="navy" href="contact.html">Contact and legal</a>
+</nav>
+
+<main id="main-content" class="theme-silver">
+  <h2 class="section-title">Free Tools</h2>
+  <p class="section-sub">No purchase, no install — these run right here in your browser. Tap a tool to open it.</p>
+
+  <div class="grid-cards" style="grid-template-columns:1fr">
+
+    <details class="tool-card">
+      <summary>
+        <div class="tool-meta">
+          <h3>Word &amp; Character Counter</h3>
+          <p>Live word count, character count, and estimated reading time.</p>
+        </div>
+        <span class="chevron">+</span>
+      </summary>
+      <div class="tool-body">
+        <label for="wc-input" class="tool-row" style="display:block">Paste or type text below</label>
+        <textarea id="wc-input" placeholder="Paste or type text here…" style="width:100%;min-height:130px"></textarea>
+        <div class="tool-stats">
+          <div>Words<span id="wc-words">0</span></div>
+          <div>Characters<span id="wc-chars">0</span></div>
+          <div>Sentences<span id="wc-sentences">0</span></div>
+          <div>Reading time<span id="wc-time">0 min</span></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool-card">
+      <summary>
+        <div class="tool-meta">
+          <h3>Color Contrast Checker</h3>
+          <p>Check text/background contrast against WCAG AA &amp; AAA.</p>
+        </div>
+        <span class="chevron">+</span>
+      </summary>
+      <div class="tool-body">
+        <div class="swatch-pair">
+          <div class="pair-block">
+            <label for="cc-fg-hex">Text</label>
+            <input type="color" id="cc-fg" value="#e9eef5" aria-label="Text color picker">
+            <input type="text" id="cc-fg-hex" value="#e9eef5">
+          </div>
+          <span style="color:var(--text-faint);font-size:.8rem">on</span>
+          <div class="pair-block">
+            <label for="cc-bg-hex">Background</label>
+            <input type="color" id="cc-bg" value="#0d121b" aria-label="Background color picker">
+            <input type="text" id="cc-bg-hex" value="#0d121b">
+          </div>
+        </div>
+        <div id="cc-preview" class="preview-text">The quick brown fox jumps over the lazy dog</div>
+        <div class="tool-out" id="cc-out" style="margin-top:14px">Ratio: —</div>
+      </div>
+    </details>
+
+    <details class="tool-card">
+      <summary>
+        <div class="tool-meta">
+          <h3>JSON Formatter &amp; Validator</h3>
+          <p>Paste JSON, format it, and catch syntax errors instantly.</p>
+        </div>
+        <span class="chevron">+</span>
+      </summary>
+      <div class="tool-body">
+        <label for="json-input" class="tool-row" style="display:block">Paste JSON below</label>
+        <textarea id="json-input" placeholder='{"example": true}' style="width:100%;min-height:120px;font-family:ui-monospace,monospace"></textarea>
+        <div class="tool-row" style="margin-top:10px">
+          <button class="btn-small" id="json-format" type="button">Format</button>
+          <button class="btn-small" id="json-clear" type="button">Clear</button>
+        </div>
+        <div class="tool-out" id="json-out">Output will appear here.</div>
+      </div>
+    </details>
+
+    <details class="tool-card">
+      <summary>
+        <div class="tool-meta">
+          <h3>Password Generator</h3>
+          <p>Generate a random password with custom length and character sets.</p>
+        </div>
+        <span class="chevron">+</span>
+      </summary>
+      <div class="tool-body">
+        <div class="tool-row">
+          <div class="range-row">
+            <label for="pw-length">Length</label>
+            <input type="range" id="pw-length" min="6" max="48" value="16">
+            <span id="pw-length-val" style="color:var(--text);font-weight:600">16</span>
+          </div>
+        </div>
+        <div class="checkbox-row">
+          <label><input type="checkbox" id="pw-upper" checked> Uppercase</label>
+          <label><input type="checkbox" id="pw-lower" checked> Lowercase</label>
+          <label><input type="checkbox" id="pw-num" checked> Numbers</label>
+          <label><input type="checkbox" id="pw-sym" checked> Symbols</label>
+        </div>
+        <div class="tool-row">
+          <button class="btn-small" id="pw-generate" type="button">Generate</button>
+          <button class="btn-small" id="pw-copy" type="button">Copy</button>
+        </div>
+        <div class="tool-out" id="pw-out">Click Generate</div>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="card" style="margin-top:22px;border-color:var(--silver)">
+    <span class="badge silver">LEVEL UP</span>
+    <h3>Looking for something even more useful?</h3>
+    <p>These free tools cover only the basics. For heavier-duty editing, capture, and automation, check out the full product lineup.</p>
+    <a class="main-btn btn-silver" href="products.html">Browse All Products</a>
+  </div>
+</main>
+
+<footer>
+  <p>Vellum Studio &bull; <a href="products.html">Products</a> &bull; <a href="tools.html">Tools</a></p>
+  <p style="margin-top:6px">&#169; 2026 Vellum Studio — All Rights Reserved</p>
+</footer>
+
+<script>
+const secret = [];
+document.addEventListener("keydown", e => {
+  secret.push(e.key.toLowerCase());
+  if(secret.slice(-6).join("") === "vellum")
+    document.body.classList.toggle("secret-mode");
+});
+
+</script>
+<script>
+/* Word & Character Counter */
+(function(){
+  const input = document.getElementById("wc-input");
+  const words = document.getElementById("wc-words");
+  const chars = document.getElementById("wc-chars");
+  const sentences = document.getElementById("wc-sentences");
+  const time = document.getElementById("wc-time");
+  if(!input) return;
+  input.addEventListener("input", () => {
+    const text = input.value;
+    const wordList = text.trim().length ? text.trim().split(/\s+/) : [];
+    const sentenceList = text.trim().length ? text.trim().split(/[.!?]+/).filter(s => s.trim().length) : [];
+    words.textContent = wordList.length;
+    chars.textContent = text.length;
+    sentences.textContent = sentenceList.length;
+    time.textContent = Math.max(1, Math.ceil(wordList.length / 200)) + " min";
+  });
+})();
+
+/* Color Contrast Checker */
+(function(){
+  const fg = document.getElementById("cc-fg");
+  const fgHex = document.getElementById("cc-fg-hex");
+  const bg = document.getElementById("cc-bg");
+  const bgHex = document.getElementById("cc-bg-hex");
+  const preview = document.getElementById("cc-preview");
+  const out = document.getElementById("cc-out");
+  if(!fg) return;
+
+  function luminance(hex){
+    const rgb = [1,3,5].map(i => parseInt(hex.substr(i,2),16) / 255);
+    const [r,g,b] = rgb.map(c => c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4));
+    return 0.2126*r + 0.7152*g + 0.0722*b;
+  }
+  function isHex(v){ return /^#[0-9a-fA-F]{6}$/.test(v); }
+
+  function update(){
+    if(!isHex(fgHex.value) || !isHex(bgHex.value)) return;
+    fg.value = fgHex.value; bg.value = bgHex.value;
+    const L1 = luminance(fgHex.value);
+    const L2 = luminance(bgHex.value);
+    const ratio = (Math.max(L1,L2) + 0.05) / (Math.min(L1,L2) + 0.05);
+    preview.style.color = fgHex.value;
+    preview.style.background = bgHex.value;
+    const r = ratio.toFixed(2);
+    const aaNormal = ratio >= 4.5, aaaNormal = ratio >= 7, aaLarge = ratio >= 3;
+    out.className = "tool-out " + (aaNormal ? "pass" : "error");
+    out.textContent = "Ratio: " + r + ":1 — AA normal text: " + (aaNormal ? "Pass" : "Fail") + " · AAA normal text: " + (aaaNormal ? "Pass" : "Fail") + " · AA large text: " + (aaLarge ? "Pass" : "Fail");
+  }
+
+  fg.addEventListener("input", () => { fgHex.value = fg.value; update(); });
+  bg.addEventListener("input", () => { bgHex.value = bg.value; update(); });
+  fgHex.addEventListener("input", update);
+  bgHex.addEventListener("input", update);
+  update();
+})();
+
+/* JSON Formatter & Validator */
+(function(){
+  const input = document.getElementById("json-input");
+  const out = document.getElementById("json-out");
+  const formatBtn = document.getElementById("json-format");
+  const clearBtn = document.getElementById("json-clear");
+  if(!input) return;
+  formatBtn.addEventListener("click", () => {
+    try{
+      const parsed = JSON.parse(input.value);
+      out.className = "tool-out pass";
+      out.textContent = JSON.stringify(parsed, null, 2);
+    }catch(e){
+      out.className = "tool-out error";
+      out.textContent = "Invalid JSON: " + e.message;
+    }
+  });
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    out.className = "tool-out";
+    out.textContent = "Output will appear here.";
+  });
+})();
+
+/* Password Generator */
+(function(){
+  const lengthInput = document.getElementById("pw-length");
+  const lengthVal = document.getElementById("pw-length-val");
+  const out = document.getElementById("pw-out");
+  const genBtn = document.getElementById("pw-generate");
+  const copyBtn = document.getElementById("pw-copy");
+  if(!lengthInput) return;
+
+  const sets = {
+    upper: "ABCDEFGHJKLMNPQRSTUVWXYZ",
+    lower: "abcdefghijkmnpqrstuvwxyz",
+    num: "23456789",
+    sym: "!@#$%^&*()-_=+"
+  };
+
+  lengthInput.addEventListener("input", () => { lengthVal.textContent = lengthInput.value; });
+
+  genBtn.addEventListener("click", () => {
+    let pool = "";
+    if(document.getElementById("pw-upper").checked) pool += sets.upper;
+    if(document.getElementById("pw-lower").checked) pool += sets.lower;
+    if(document.getElementById("pw-num").checked) pool += sets.num;
+    if(document.getElementById("pw-sym").checked) pool += sets.sym;
+    if(!pool){
+      out.className = "tool-out error";
+      out.textContent = "Select at least one character set.";
+      return;
+    }
+    const len = parseInt(lengthInput.value, 10);
+    const arr = new Uint32Array(len);
+    crypto.getRandomValues(arr);
+    let result = "";
+    for(let i = 0; i < len; i++) result += pool[arr[i] % pool.length];
+    out.className = "tool-out pass";
+    out.textContent = result;
+  });
+
+  copyBtn.addEventListener("click", () => {
+    const text = out.textContent;
+    if(!text || text === "Click Generate") return;
+    navigator.clipboard.writeText(text).then(() => {
+      const prev = copyBtn.textContent;
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => { copyBtn.textContent = prev; }, 1200);
+    });
+  });
+})();
+
+</script>
+</body>
+</html>

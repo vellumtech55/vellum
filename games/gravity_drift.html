@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gravity Drift — Vellum Studio</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --panel: #161616;
+    --panel-line: #262626;
+    --accent: #2f7dd6;
+    --accent-dim: #1c4c85;
+    --goal: #35c98d;
+    --hazard: #d64f4f;
+    --text: #e8e8e8;
+    --text-dim: #8a8a8a;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+  }
+  #wrap {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+  }
+  #hud {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--panel);
+    border-right: 1px solid var(--panel-line);
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  #hud h1 {
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  #hud .sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: -12px;
+    letter-spacing: 1px;
+  }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--panel-line);
+    padding-bottom: 8px;
+  }
+  .stat b {
+    color: var(--text);
+    font-size: 14px;
+  }
+  button {
+    background: var(--accent-dim);
+    color: var(--text);
+    border: 1px solid var(--accent);
+    padding: 9px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    transition: background 0.15s, transform 0.1s;
+  }
+  button:hover { background: var(--accent); }
+  button:active { transform: scale(0.97); }
+  button:disabled { opacity: 0.35; cursor: not-allowed; }
+  button.secondary {
+    background: transparent;
+    border-color: var(--panel-line);
+    color: var(--text-dim);
+  }
+  button.secondary:hover { border-color: var(--text-dim); background: #1d1d1d; }
+  #modeToggle {
+    display: flex;
+    gap: 6px;
+  }
+  #modeToggle button { flex: 1; }
+  #modeToggle button.active {
+    background: var(--accent);
+  }
+  #instructions {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+  #instructions b { color: var(--text); }
+  #stage {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  canvas {
+    background: radial-gradient(ellipse at 50% 40%, #111318 0%, #0a0a0c 70%);
+    border: 1px solid var(--panel-line);
+    cursor: crosshair;
+  }
+  #banner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(13,13,13,0.94);
+    border: 1px solid var(--panel-line);
+    border-radius: 8px;
+    padding: 28px 36px;
+    text-align: center;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    min-width: 260px;
+  }
+  #banner h2 { margin: 0; font-size: 20px; letter-spacing: 1px; }
+  #banner p { margin: 0; color: var(--text-dim); font-size: 13px; }
+  #banner .row { display: flex; gap: 8px; margin-top: 6px; }
+  #footer-note {
+    font-size: 10px;
+    color: #4a4a4a;
+    margin-top: auto;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="hud">
+    <div>
+      <h1>GRAVITY DRIFT</h1>
+      <div class="sub">a Vellum original</div>
+    </div>
+
+    <div class="stat">Level <b id="levelNum">1</b></div>
+    <div class="stat">Wells left <b id="wellsLeft">3</b></div>
+    <div class="stat">Attempts <b id="attempts">0</b></div>
+    <div class="stat">Best (moves) <b id="bestScore">—</b></div>
+
+    <div id="modeToggle">
+      <button id="modeAttract" class="active">Pull</button>
+      <button id="modeRepel">Push</button>
+    </div>
+
+    <button id="launchBtn">▶ Launch Probe</button>
+    <button id="resetBtn" class="secondary">Reset Level</button>
+
+    <div id="instructions">
+      Click empty space to drop a gravity well. <b>Pull</b> wells attract the probe, <b>Push</b> wells repel it. Bend the probe's drift so it reaches the <b style="color:#35c98d">green</b> gate without touching <b style="color:#d64f4f">red</b> hazards. Click a well again to remove it.
+    </div>
+
+    <div id="footer-note">GRAVITY DRIFT · vellum studio</div>
+  </div>
+
+  <div id="stage">
+    <canvas id="game" width="760" height="560"></canvas>
+    <div id="banner">
+      <h2 id="bannerTitle">Level Clear</h2>
+      <p id="bannerText">Nice trajectory.</p>
+      <div class="row">
+        <button id="bannerRetry" class="secondary">Retry</button>
+        <button id="bannerNext">Next Level →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // ---------- Level definitions ----------
+  // start: launch point/velocity, goal: {x,y,r}, hazards: [{x,y,r}], wellBudget: max wells allowed
+  const levels = [
+    {
+      start: {x: 40, y: 280, vx: 3.6, vy: 0},
+      goal: {x: 700, y: 280, r: 26},
+      hazards: [],
+      wellBudget: 2,
+      allowRepel: false
+    },
+    {
+      start: {x: 40, y: 100, vx: 4, vy: 0.4},
+      goal: {x: 700, y: 460, r: 26},
+      hazards: [ {x: 380, y: 280, r: 46} ],
+      wellBudget: 2,
+      allowRepel: false
+    },
+    {
+      start: {x: 40, y: 480, vx: 4.2, vy: -0.6},
+      goal: {x: 720, y: 60, r: 24},
+      hazards: [ {x: 260, y: 200, r: 40}, {x: 500, y: 400, r: 40} ],
+      wellBudget: 3,
+      allowRepel: true
+    },
+    {
+      start: {x: 30, y: 280, vx: 4.6, vy: 0},
+      goal: {x: 700, y: 280, r: 22},
+      hazards: [ {x: 300, y: 280, r: 70} ],
+      wellBudget: 2,
+      allowRepel: true
+    },
+    {
+      start: {x: 40, y: 40, vx: 3.4, vy: 1.2},
+      goal: {x: 60, y: 520, r: 22},
+      hazards: [ {x: 380, y: 280, r: 60}, {x: 620, y: 150, r: 34}, {x: 620, y: 420, r: 34} ],
+      wellBudget: 3,
+      allowRepel: true
+    },
+    {
+      start: {x: 700, y: 60, vx: -3.8, vy: 0.3},
+      goal: {x: 40, y: 500, r: 22},
+      hazards: [ {x: 500, y: 200, r: 40}, {x: 260, y: 400, r: 46}, {x: 620, y: 480, r: 30} ],
+      wellBudget: 3,
+      allowRepel: true
+    },
+    {
+      start: {x: 40, y: 280, vx: 3.8, vy: 0},
+      goal: {x: 380, y: 280, r: 20},
+      hazards: [ {x: 200, y: 280, r: 34}, {x: 380, y: 140, r: 30}, {x: 380, y: 420, r: 30}, {x: 560, y: 280, r: 34} ],
+      wellBudget: 4,
+      allowRepel: true
+    }
+  ];
+
+  let levelIdx = 0;
+  let wells = []; // {x,y,type:'attract'|'repel'}
+  let placingMode = 'attract';
+  let attempts = 0;
+  let bestScores = {}; // levelIdx -> moves-equivalent (we use time steps)
+  let running = false;
+  let probe = null;
+  let trail = [];
+  let simSteps = 0;
+  let starfield = [];
+  let outcome = null; // 'win' | 'lose' | null
+
+  for (let i=0;i<90;i++){
+    starfield.push({x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.3+0.2, a: Math.random()*0.6+0.2});
+  }
+
+  const levelNumEl = document.getElementById('levelNum');
+  const wellsLeftEl = document.getElementById('wellsLeft');
+  const attemptsEl = document.getElementById('attempts');
+  const bestScoreEl = document.getElementById('bestScore');
+  const launchBtn = document.getElementById('launchBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const modeAttract = document.getElementById('modeAttract');
+  const modeRepel = document.getElementById('modeRepel');
+  const banner = document.getElementById('banner');
+  const bannerTitle = document.getElementById('bannerTitle');
+  const bannerText = document.getElementById('bannerText');
+  const bannerRetry = document.getElementById('bannerRetry');
+  const bannerNext = document.getElementById('bannerNext');
+
+  function currentLevel(){ return levels[levelIdx]; }
+
+  function resetLevel(newAttempt){
+    const lvl = currentLevel();
+    wells = [];
+    running = false;
+    outcome = null;
+    trail = [];
+    simSteps = 0;
+    probe = { x: lvl.start.x, y: lvl.start.y, vx: lvl.start.vx, vy: lvl.start.vy };
+    banner.style.display = 'none';
+    if (newAttempt) attempts++;
+    updateHud();
+  }
+
+  function updateHud(){
+    const lvl = currentLevel();
+    levelNumEl.textContent = (levelIdx+1);
+    wellsLeftEl.textContent = Math.max(0, lvl.wellBudget - wells.length);
+    attemptsEl.textContent = attempts;
+    bestScoreEl.textContent = bestScores[levelIdx] !== undefined ? bestScores[levelIdx] : '—';
+    modeRepel.style.display = lvl.allowRepel ? 'inline-block' : 'none';
+    launchBtn.disabled = running;
+  }
+
+  modeAttract.addEventListener('click', () => {
+    placingMode = 'attract';
+    modeAttract.classList.add('active');
+    modeRepel.classList.remove('active');
+  });
+  modeRepel.addEventListener('click', () => {
+    if (!currentLevel().allowRepel) return;
+    placingMode = 'repel';
+    modeRepel.classList.add('active');
+    modeAttract.classList.remove('active');
+  });
+
+  canvas.addEventListener('click', (e) => {
+    if (running) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (W/rect.width);
+    const y = (e.clientY - rect.top) * (H/rect.height);
+
+    // check remove existing well
+    for (let i=0;i<wells.length;i++){
+      const w = wells[i];
+      if (Math.hypot(w.x-x, w.y-y) < 16){
+        wells.splice(i,1);
+        updateHud();
+        draw();
+        return;
+      }
+    }
+
+    const lvl = currentLevel();
+    if (wells.length >= lvl.wellBudget) return;
+    // don't allow placing on goal or too close to start
+    if (Math.hypot(x-lvl.goal.x, y-lvl.goal.y) < lvl.goal.r + 20) return;
+    if (Math.hypot(x-lvl.start.x, y-lvl.start.y) < 30) return;
+
+    wells.push({x, y, type: placingMode});
+    updateHud();
+    draw();
+  });
+
+  launchBtn.addEventListener('click', () => {
+    if (running) return;
+    running = true;
+    outcome = null;
+    trail = [{x: probe.x, y: probe.y}];
+    simSteps = 0;
+    updateHud();
+    requestAnimationFrame(step);
+  });
+
+  resetBtn.addEventListener('click', () => resetLevel(false));
+  bannerRetry.addEventListener('click', () => resetLevel(true));
+  bannerNext.addEventListener('click', () => {
+    if (levelIdx < levels.length - 1){
+      levelIdx++;
+      resetLevel(false);
+      attempts = 0;
+    } else {
+      levelIdx = 0;
+      resetLevel(false);
+      attempts = 0;
+    }
+  });
+
+  const WELL_STRENGTH = 2600;
+  const MIN_DIST = 18;
+
+  function physicsStep(){
+    let fx = 0, fy = 0;
+    for (const w of wells){
+      const dx = w.x - probe.x, dy = w.y - probe.y;
+      let d2 = dx*dx + dy*dy;
+      const d = Math.sqrt(d2);
+      if (d < MIN_DIST) d2 = MIN_DIST*MIN_DIST;
+      const sign = w.type === 'attract' ? 1 : -1;
+      const force = sign * WELL_STRENGTH / d2;
+      fx += force * (dx/(d||1));
+      fy += force * (dy/(d||1));
+    }
+    probe.vx += fx * 0.016;
+    probe.vy += fy * 0.016;
+    probe.x += probe.vx;
+    probe.y += probe.vy;
+
+    // bounce off walls
+    if (probe.x < 6){ probe.x = 6; probe.vx *= -0.7; }
+    if (probe.x > W-6){ probe.x = W-6; probe.vx *= -0.7; }
+    if (probe.y < 6){ probe.y = 6; probe.vy *= -0.7; }
+    if (probe.y > H-6){ probe.y = H-6; probe.vy *= -0.7; }
+  }
+
+  function step(){
+    if (!running) return;
+    physicsStep();
+    simSteps++;
+    trail.push({x: probe.x, y: probe.y});
+    if (trail.length > 900) trail.shift();
+
+    const lvl = currentLevel();
+
+    // hazard collision
+    for (const h of lvl.hazards){
+      if (Math.hypot(probe.x-h.x, probe.y-h.y) < h.r){
+        outcome = 'lose';
+        running = false;
+        showBanner(false);
+        draw();
+        return;
+      }
+    }
+    // goal collision
+    if (Math.hypot(probe.x-lvl.goal.x, probe.y-lvl.goal.y) < lvl.goal.r){
+      outcome = 'win';
+      running = false;
+      if (bestScores[levelIdx] === undefined || simSteps < bestScores[levelIdx]){
+        bestScores[levelIdx] = simSteps;
+      }
+      showBanner(true);
+      draw();
+      return;
+    }
+    // timeout
+    if (simSteps > 1400){
+      outcome = 'lose';
+      running = false;
+      showBanner(false, true);
+      draw();
+      return;
+    }
+
+    draw();
+    requestAnimationFrame(step);
+  }
+
+  function showBanner(win, timeout){
+    banner.style.display = 'flex';
+    if (win){
+      bannerTitle.textContent = 'Gate Reached';
+      bannerTitle.style.color = 'var(--goal)';
+      bannerText.textContent = `Cleared in ${simSteps} steps · ${wells.length} well${wells.length===1?'':'s'} used.`;
+      bannerNext.style.display = 'inline-block';
+      bannerNext.textContent = levelIdx < levels.length-1 ? 'Next Level →' : 'Restart Set →';
+    } else {
+      bannerTitle.textContent = timeout ? 'Drifted Off Course' : 'Hazard Contact';
+      bannerTitle.style.color = 'var(--hazard)';
+      bannerText.textContent = timeout ? 'The probe never reached the gate. Adjust your wells.' : 'The probe was pulled into a hazard.';
+      bannerNext.style.display = 'none';
+    }
+    updateHud();
+  }
+
+  function drawGrid(){
+    // distorted grid to visualize gravity field
+    const spacing = 40;
+    ctx.strokeStyle = 'rgba(47,125,214,0.10)';
+    ctx.lineWidth = 1;
+    for (let gx = 0; gx <= W; gx += spacing){
+      ctx.beginPath();
+      for (let gy = 0; gy <= H; gy += 8){
+        let px = gx, py = gy;
+        for (const w of wells){
+          const dx = px - w.x, dy = py - w.y;
+          const d = Math.max(Math.hypot(dx,dy), 24);
+          const pull = (w.type==='attract'? -1 : 1) * 900 / (d*d) * 40;
+          px += (dx/d) * pull;
+          py += (dy/d) * pull;
+        }
+        if (gy === 0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+    }
+    for (let gy = 0; gy <= H; gy += spacing){
+      ctx.beginPath();
+      for (let gx = 0; gx <= W; gx += 8){
+        let px = gx, py = gy;
+        for (const w of wells){
+          const dx = px - w.x, dy = py - w.y;
+          const d = Math.max(Math.hypot(dx,dy), 24);
+          const pull = (w.type==='attract'? -1 : 1) * 900 / (d*d) * 40;
+          px += (dx/d) * pull;
+          py += (dy/d) * pull;
+        }
+        if (gx === 0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // starfield
+    for (const s of starfield){
+      ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    drawGrid();
+
+    const lvl = currentLevel();
+
+    // hazards
+    for (const h of lvl.hazards){
+      const grad = ctx.createRadialGradient(h.x,h.y,0,h.x,h.y,h.r);
+      grad.addColorStop(0, 'rgba(214,79,79,0.35)');
+      grad.addColorStop(1, 'rgba(214,79,79,0.02)');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(h.x,h.y,h.r,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = 'rgba(214,79,79,0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(h.x,h.y,h.r,0,Math.PI*2); ctx.stroke();
+    }
+
+    // goal
+    ctx.save();
+    const pulse = 4*Math.sin(Date.now()/300);
+    const gGrad = ctx.createRadialGradient(lvl.goal.x,lvl.goal.y,0,lvl.goal.x,lvl.goal.y,lvl.goal.r+pulse+8);
+    gGrad.addColorStop(0, 'rgba(53,201,141,0.5)');
+    gGrad.addColorStop(1, 'rgba(53,201,141,0)');
+    ctx.fillStyle = gGrad;
+    ctx.beginPath(); ctx.arc(lvl.goal.x,lvl.goal.y,lvl.goal.r+pulse+8,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#35c98d';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(lvl.goal.x,lvl.goal.y,lvl.goal.r,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+
+    // wells
+    for (const w of wells){
+      const col = w.type === 'attract' ? '47,125,214' : '214,150,47';
+      const grad = ctx.createRadialGradient(w.x,w.y,0,w.x,w.y,42);
+      grad.addColorStop(0, `rgba(${col},0.55)`);
+      grad.addColorStop(1, `rgba(${col},0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(w.x,w.y,42,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = `rgba(${col},0.95)`;
+      ctx.beginPath(); ctx.arc(w.x,w.y,7,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = `rgba(${col},1)`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(w.x,w.y,13,0,Math.PI*2); ctx.stroke();
+    }
+
+    // trail
+    if (trail.length > 1){
+      ctx.strokeStyle = 'rgba(232,232,232,0.5)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(trail[0].x, trail[0].y);
+      for (let i=1;i<trail.length;i++) ctx.lineTo(trail[i].x, trail[i].y);
+      ctx.stroke();
+    }
+
+    // start marker (only if not running/started)
+    ctx.fillStyle = 'rgba(232,232,232,0.5)';
+    ctx.beginPath(); ctx.arc(lvl.start.x, lvl.start.y, 4, 0, Math.PI*2); ctx.fill();
+
+    // probe
+    const px = probe ? probe.x : lvl.start.x;
+    const py = probe ? probe.y : lvl.start.y;
+    ctx.fillStyle = '#e8e8e8';
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = 'rgba(232,232,232,0.4)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(px, py, 9, 0, Math.PI*2); ctx.stroke();
+  }
+
+  function idleLoop(){
+    if (!running) draw();
+    requestAnimationFrame(idleLoop);
+  }
+
+  resetLevel(false);
+  attempts = 0;
+  updateHud();
+  idleLoop();
+})();
+</script>
+</body>
+</html>

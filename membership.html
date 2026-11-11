@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Membership — Light, Core &amp; Premium Plans | Vellum Studio</title>
+<meta name="description" content="Vellum Studio membership plans — Light, Core, and Premium. Get ongoing access to the full Vellum product lineup, updates, and perks with monthly or yearly billing.">
+<meta property="og:title" content="Membership — Vellum Studio">
+<meta property="og:description" content="Light, Core, and Premium membership plans for ongoing access to the Vellum Studio lineup.">
+<meta property="og:url" content="https://vellumtech55.github.io/vellum/membership.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://vellumtech55.github.io/vellum/membership.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMwZDEyMWIiLz4KICA8dGV4dCB4PSIzMiIgeT0iNDQiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhYWI1YzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlY8L3RleHQ+Cjwvc3ZnPgo=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,800;1,500&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink-950:#070a10;
+  --ink-900:#0d121b;
+  --ink-850:#121722;
+  --ink-800:#1a202c;
+  --line:rgba(233,238,245,.09);
+  --line-strong:rgba(233,238,245,.18);
+  --text:#e9eef5;
+  --text-dim:#98a1ad;
+  --text-faint:#7c8592;
+
+  --navy:#5a7fb8;
+  --navy-dim:rgba(90,127,184,.35);
+  --navy-bg:#10141f;
+
+  --copper:#d98255;
+  --copper-dim:rgba(217,130,85,.35);
+  --copper-bg:#1c130c;
+
+  --teal:#33b8b0;
+  --teal-dim:rgba(51,184,176,.35);
+  --teal-bg:#0b1817;
+
+  --silver:#aab5c4;
+  --silver-dim:rgba(170,181,196,.35);
+  --silver-bg:#14171c;
+
+  --font-display:'Fraunces',serif;
+  --font-body:'Inter',sans-serif;
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--ink-950);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+.bg-glow{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+}
+.bg-glow::before{
+  content:"";
+  position:absolute;
+  width:900px;
+  height:900px;
+  border-radius:50%;
+  filter:blur(170px);
+  background:rgba(90,127,184,.16);
+  animation:float 18s ease-in-out infinite;
+}
+.bg-glow.copper::before{ background:rgba(217,130,85,.18); }
+.bg-glow.teal::before{ background:rgba(51,184,176,.14); }
+.bg-glow.silver::before { background:rgba(170,181,196,.16); }
+
+@keyframes float{
+  0%  {transform:translate(-10%,-10%) scale(1)}
+  50% {transform:translate(35%,20%) scale(1.25)}
+  100%{transform:translate(-10%,-10%) scale(1)}
+}
+
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  opacity:.06;
+  background-image:
+    linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:45px 45px;
+}
+
+.grain{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:180px 180px;
+}
+
+.deckle{
+  height:16px;
+  width:100%;
+  background-color:var(--ink-950);
+  background-image:
+    linear-gradient(135deg, var(--ink-900) 50%, transparent 50%),
+    linear-gradient(-135deg, var(--ink-900) 50%, transparent 50%);
+  background-position:0 0,0 0;
+  background-size:16px 16px;
+  background-repeat:repeat-x;
+}
+
+header{
+  text-align:center;
+  padding:110px 20px 0;
+  background:var(--ink-900);
+}
+
+.eyebrow{
+  font-size:.78rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--navy);
+  font-weight:600;
+  margin-bottom:14px;
+}
+
+header h1{
+  font-family:var(--font-display);
+  font-size:4.2rem;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+header h1 a{
+  color:inherit;
+  text-decoration:none;
+}
+
+header p.tagline{
+  color:var(--text-dim);
+  margin-top:10px;
+  font-size:1.05rem;
+  font-family:var(--font-display);
+  font-style:italic;
+}
+
+.hero{
+  max-width:780px;
+  margin:36px auto 0;
+  padding:30px 34px;
+  border-radius:4px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  text-align:left;
+}
+
+.hero h2{font-size:.78rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:10px;font-weight:600}
+.hero h3{font-family:var(--font-display);font-size:1.5rem;margin-bottom:10px;font-weight:600}
+.hero p{color:var(--text-dim);font-size:.95rem;line-height:1.6}
+
+header .deckle-spacer{ height:48px; }
+
+nav{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:16px 20px;
+  position:sticky;
+  top:0;
+  backdrop-filter:blur(14px);
+  background:rgba(8,9,11,.78);
+  z-index:10;
+  border-bottom:1px solid var(--line);
+}
+
+.nav-link{
+  padding:10px 18px;
+  border-radius:8px;
+  border:1px solid var(--line-strong);
+  background:var(--ink-850);
+  color:var(--text-dim);
+  cursor:pointer;
+  transition:.2s;
+  font-size:.88rem;
+  font-weight:600;
+  font-family:var(--font-body);
+  text-decoration:none;
+  display:inline-block;
+}
+
+.nav-link:hover{
+  transform:translateY(-1px);
+  color:var(--text);
+  border-color:var(--text-faint);
+}
+
+.nav-link.active{ background:var(--ink-800); }
+.nav-link.active[data-accent="navy"]   { border-color:var(--navy);    color:var(--navy);    box-shadow:0 0 16px var(--navy-dim); }
+.nav-link.active[data-accent="copper"]{ border-color:var(--copper); color:var(--copper); box-shadow:0 0 16px var(--copper-dim); }
+.nav-link.active[data-accent="teal"]{ border-color:var(--teal); color:var(--teal); box-shadow:0 0 16px var(--teal-dim); }
+.nav-link.active[data-accent="silver"] { border-color:var(--silver);  color:var(--silver);  box-shadow:0 0 16px var(--silver-dim); }
+
+main{
+  max-width:1180px;
+  margin:auto;
+  padding:54px 22px 84px;
+  animation:.3s fade ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to  {opacity:1;transform:translateY(0)}
+}
+
+.section-title{
+  font-family:var(--font-display);
+  font-size:2rem;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.section-sub{
+  color:var(--text-dim);
+  font-size:.95rem;
+  margin-bottom:30px;
+  max-width:560px;
+}
+
+.grid-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-top:4px;
+}
+
+.card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:24px;
+  transition:.22s;
+}
+.card:hover{ transform:translateY(-4px); border-color:var(--line-strong); }
+
+.theme-navy .card:hover    { border-color:var(--navy);    box-shadow:0 0 22px rgba(90,127,184,.14); }
+.theme-copper .card:hover { border-color:var(--copper); box-shadow:0 0 22px rgba(217,130,85,.16); }
+.theme-teal .card:hover { border-color:var(--teal); box-shadow:0 0 22px rgba(51,184,176,.14); }
+.theme-silver .card:hover  { border-color:var(--silver);  box-shadow:0 0 22px rgba(170,181,196,.16); }
+
+.card h3{ font-family:var(--font-display); font-size:1.18rem; font-weight:600; margin-bottom:8px; }
+.card p{ color:var(--text-dim); font-size:.92rem; line-height:1.55; }
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:5px;
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.badge.navy{ background:var(--navy-bg); color:var(--navy); }
+.badge.copper{ background:var(--copper-bg); color:var(--copper); }
+.badge.teal{ background:var(--teal-bg); color:var(--teal); }
+.badge.silver{ background:var(--silver-bg); color:var(--silver); }
+
+.stat-card h3{ font-family:var(--font-display); font-size:2.1rem; font-weight:700; margin-bottom:4px; }
+.stat-card p{ color:var(--text-faint); font-size:.85rem; }
+
+.main-btn{
+  display:inline-block;
+  margin-top:14px;
+  padding:10px 18px;
+  border-radius:7px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:.86rem;
+  cursor:pointer;
+  transition:.2s;
+  font-family:var(--font-body);
+  border:1px solid transparent;
+}
+.btn-navy   { background:transparent; color:var(--navy);    border-color:var(--navy); }
+.btn-navy:hover   { background:var(--navy);    color:#0d121b; }
+.btn-copper{ background:transparent; color:var(--copper); border-color:var(--copper); }
+.btn-copper:hover{ background:var(--copper); color:#1f1006; }
+.btn-teal{ background:transparent; color:var(--teal); border-color:var(--teal); }
+.btn-teal:hover{ background:var(--teal); color:#041615; }
+.btn-silver { background:transparent; color:var(--silver);  border-color:var(--silver); }
+.btn-silver:hover { background:var(--silver);  color:#12151a; }
+
+.roadmap{ display:flex; flex-direction:column; gap:12px; }
+.step{
+  padding:16px 20px;
+  border-left:3px solid var(--navy);
+  background:rgba(255,255,255,.03);
+  border-radius:6px;
+  font-size:.93rem;
+  color:var(--text-dim);
+}
+.step b{ color:var(--text); }
+
+form{ display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+input,textarea{
+  background:var(--ink-900);
+  border:1px solid var(--line-strong);
+  color:var(--text);
+  padding:13px 15px;
+  border-radius:7px;
+  font-size:.95rem;
+  font-family:var(--font-body);
+}
+textarea{ min-height:150px; resize:vertical; }
+input:focus,textarea:focus{ outline:none; border-color:var(--navy); }
+
+.legal-box{
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:26px;
+  line-height:1.75;
+  color:var(--text-faint);
+  font-size:.88rem;
+}
+.legal-box h3{ font-family:var(--font-display); color:var(--text-dim); margin-bottom:14px; }
+
+footer{
+  text-align:center;
+  padding:36px 20px;
+  color:var(--text-faint);
+  border-top:1px solid var(--line);
+  font-size:.85rem;
+}
+footer a{ color:var(--text-faint); }
+footer a:hover{ color:var(--navy); }
+
+.tool-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+.tool-card > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.tool-card > summary::-webkit-details-marker{ display:none; }
+.tool-card > summary .tool-meta h3{ font-family:var(--font-display); font-size:1.1rem; margin-bottom:4px; }
+.tool-card > summary .tool-meta p{ color:var(--text-dim); font-size:.88rem; }
+.tool-card > summary .chevron{ color:var(--silver); font-size:1.3rem; transition:.2s; flex-shrink:0; }
+.tool-card[open] > summary .chevron{ transform:rotate(45deg); }
+.tool-card[open]{ border-color:var(--silver); box-shadow:0 0 22px rgba(170,181,196,.13); }
+
+.tool-body{ padding:0 24px 26px; border-top:1px solid var(--line); padding-top:20px; }
+
+.tool-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+.tool-row label{ font-size:.82rem; color:var(--text-dim); display:flex; align-items:center; gap:6px; }
+.tool-stats{ display:flex; gap:22px; flex-wrap:wrap; margin-top:12px; }
+.tool-stats div{ font-size:.8rem; color:var(--text-faint); }
+.tool-stats span{ display:block; font-family:var(--font-display); font-size:1.4rem; color:var(--text); font-weight:600; }
+
+.tool-out{
+  background:var(--ink-950);
+  border:1px solid var(--line-strong);
+  border-radius:7px;
+  padding:14px 16px;
+  font-family:ui-monospace,monospace;
+  font-size:.85rem;
+  color:var(--text-dim);
+  white-space:pre-wrap;
+  word-break:break-word;
+  min-height:44px;
+}
+.tool-out.error{ color:var(--copper); }
+.tool-out.pass{ color:var(--teal); }
+
+.btn-small{
+  padding:8px 14px;
+  border-radius:6px;
+  border:1px solid var(--silver);
+  background:transparent;
+  color:var(--silver);
+  font-size:.83rem;
+  font-weight:600;
+  cursor:pointer;
+  font-family:var(--font-body);
+  transition:.2s;
+}
+.btn-small:hover{ background:var(--silver); color:#12151a; }
+
+.swatch-pair{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+.swatch-pair .pair-block{ display:flex; align-items:center; gap:8px; background:var(--ink-950); border:1px solid var(--line-strong); padding:8px 10px; border-radius:7px; }
+.swatch-pair input[type=color]{ width:34px; height:34px; border:none; border-radius:5px; background:none; cursor:pointer; padding:0; }
+.swatch-pair input[type=text]{ width:90px; padding:6px 8px; font-size:.82rem; }
+
+.preview-text{ margin-top:14px; padding:16px; border-radius:7px; font-size:1rem; font-weight:600; text-align:center; }
+
+.range-row{ display:flex; align-items:center; gap:10px; flex:1; min-width:180px; }
+.range-row input[type=range]{ flex:1; accent-color:var(--silver); }
+.checkbox-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px; }
+.checkbox-row label{ font-size:.85rem; color:var(--text-dim); display:flex; align-items:center; gap:6px; cursor:pointer; }
+
+.product-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  transition:.22s;
+}
+.product-card:hover{ transform:translateY(-2px); border-color:var(--line-strong); }
+
+.product-card > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:22px 24px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.product-card > summary::-webkit-details-marker{ display:none; }
+
+.product-summary-left{ flex:1; min-width:0; }
+.product-summary-left h3{ font-family:var(--font-display); font-size:1.18rem; font-weight:600; margin-bottom:6px; }
+.product-summary-left p{ color:var(--text-dim); font-size:.9rem; line-height:1.5; }
+
+.product-card .chevron{ font-size:1.3rem; transition:.2s; flex-shrink:0; color:var(--text-faint); margin-top:2px; }
+.product-card[open] .chevron{ transform:rotate(45deg); }
+
+.product-card--navy[open]   { border-color:var(--navy);    box-shadow:0 0 22px rgba(90,127,184,.14); }
+.product-card--navy .chevron{ color:var(--navy); }
+.product-card--copper[open]{ border-color:var(--copper); box-shadow:0 0 22px rgba(217,130,85,.16); }
+.product-card--copper .chevron{ color:var(--copper); }
+.product-card--teal[open]{ border-color:var(--teal); box-shadow:0 0 22px rgba(51,184,176,.14); }
+.product-card--teal .chevron{ color:var(--teal); }
+.product-card--silver[open] { border-color:var(--silver);  box-shadow:0 0 22px rgba(170,181,196,.16); }
+.product-card--silver .chevron{ color:var(--silver); }
+
+.product-body{ padding:0 24px 26px; border-top:1px solid var(--line); padding-top:20px; }
+.product-desc{ color:var(--text-dim); font-size:.92rem; line-height:1.6; margin-bottom:16px; }
+
+.feature-list{ list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.feature-list li{ font-size:.88rem; color:var(--text-dim); padding-left:22px; position:relative; line-height:1.5; }
+.feature-list li::before{ content:"✓"; position:absolute; left:0; font-weight:700; }
+.product-card--navy .feature-list li::before   { color:var(--navy); }
+.product-card--copper .feature-list li::before{ color:var(--copper); }
+.product-card--teal .feature-list li::before{ color:var(--teal); }
+.product-card--silver .feature-list li::before { color:var(--silver); }
+
+.product-meta-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; font-size:.8rem; color:var(--text-faint); }
+.product-meta-row .best-for b{ color:var(--text-dim); font-weight:600; }
+
+.about-header{ display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
+.about-intro{ flex:1; min-width:260px; }
+.about-intro h3{ font-family:var(--font-display); font-size:1.6rem; font-weight:600; margin-bottom:10px; }
+.about-intro p{ color:var(--text-dim); font-size:.95rem; line-height:1.65; margin-bottom:14px; }
+
+.tech-badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; margin-bottom:16px; }
+.tech-badge{ background:var(--ink-900); border:1px solid var(--line-strong); color:var(--text-dim); padding:6px 13px; border-radius:20px; font-size:.78rem; font-weight:600; }
+
+.social-links{ display:flex; flex-wrap:wrap; gap:10px; }
+.social-links a{ color:var(--text-dim); text-decoration:none; font-size:.86rem; font-weight:600; border:1px solid var(--line-strong); padding:9px 16px; border-radius:7px; transition:.2s; }
+.social-links a:hover{ border-color:var(--navy); color:var(--navy); }
+
+.notice-banner{ display:flex; align-items:center; gap:10px; border-radius:8px; padding:13px 18px; margin-bottom:24px; font-size:.86rem; color:var(--text-dim); border:1px solid; }
+.notice-banner a{ font-weight:700; text-decoration:none; }
+.notice-banner a:hover{ text-decoration:underline; }
+.notice-navy{ background:rgba(216,169,85,.07); border-color:rgba(216,169,85,.3); }
+.notice-navy a{ color:var(--navy); }
+.notice-copper{ background:rgba(217,130,85,.08); border-color:rgba(217,130,85,.3); }
+.notice-copper a{ color:var(--copper); }
+.notice-teal{ background:rgba(51,184,176,.08); border-color:rgba(43,214,163,.3); }
+.notice-teal a{ color:var(--teal); }
+
+.faq-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:32px; }
+.faq-item{ background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.faq-item summary{ list-style:none; cursor:pointer; padding:16px 20px; font-weight:600; font-size:.94rem; display:flex; justify-content:space-between; align-items:center; }
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary .chevron{ color:var(--navy); transition:.2s; }
+.faq-item[open] summary .chevron{ transform:rotate(45deg); }
+.faq-item p{ padding:0 20px 18px; color:var(--text-dim); font-size:.88rem; line-height:1.6; }
+
+.secret-mode{ filter:hue-rotate(180deg); }
+
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background:var(--navy);
+  color:#0d121b;
+  padding:10px 16px;
+  z-index:100;
+  border-radius:0 0 6px 0;
+  font-weight:600;
+  text-decoration:none;
+}
+.skip-link:focus{ left:0; }
+
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--navy);
+  outline-offset:2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .bg-glow::before{ animation:none; }
+  main{ animation:none; }
+}
+
+@media(max-width:680px){
+  header h1{ font-size:2.6rem; }
+  main{ padding:40px 16px 64px; }
+  .tool-card > summary{ padding:18px; }
+}
+
+/* ---- Membership page additions ---- */
+.billing-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:5px;
+  border-radius:100px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line-strong);
+  margin-bottom:8px;
+}
+.billing-toggle button{
+  border:none;
+  background:transparent;
+  color:var(--text-dim);
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:.85rem;
+  padding:9px 20px;
+  border-radius:100px;
+  cursor:pointer;
+  transition:.2s;
+}
+.billing-toggle button.active{
+  background:var(--navy);
+  color:#0d121b;
+}
+.billing-save{
+  display:inline-block;
+  margin-left:10px;
+  font-size:.72rem;
+  font-weight:700;
+  color:var(--teal);
+  background:var(--teal-bg);
+  border:1px solid var(--teal-dim);
+  padding:3px 9px;
+  border-radius:20px;
+  vertical-align:middle;
+}
+.billing-row{ margin-bottom:36px; }
+
+.tier-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  align-items:stretch;
+  margin-bottom:56px;
+}
+@media(max-width:900px){ .tier-grid{ grid-template-columns:1fr; } }
+
+.tier-card{
+  display:flex;
+  flex-direction:column;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:28px 26px;
+  position:relative;
+  transition:.22s;
+}
+.tier-card:hover{ transform:translateY(-4px); }
+
+.tier-card--light{ border-color:var(--line); }
+.tier-card--light:hover{ border-color:var(--silver); box-shadow:0 0 22px rgba(170,181,196,.14); }
+
+.tier-card--core{ border-color:var(--navy-dim); background:rgba(90,127,184,.045); }
+.tier-card--core:hover{ border-color:var(--navy); box-shadow:0 0 26px rgba(90,127,184,.2); }
+
+.tier-card--premium{ border-color:var(--copper-dim); }
+.tier-card--premium:hover{ border-color:var(--copper); box-shadow:0 0 26px rgba(217,130,85,.18); }
+
+.tier-popular{
+  position:absolute;
+  top:-12px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--navy);
+  color:#0d121b;
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  padding:5px 14px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+
+.tier-name{ font-family:var(--font-display); font-size:1.4rem; font-weight:700; margin-bottom:6px; }
+.tier-tagline{ color:var(--text-dim); font-size:.88rem; margin-bottom:20px; min-height:40px; line-height:1.5; }
+
+.tier-price{ display:flex; align-items:baseline; gap:6px; margin-bottom:2px; }
+.tier-price .amount{ font-family:var(--font-display); font-size:2.4rem; font-weight:800; }
+.tier-price .period{ color:var(--text-faint); font-size:.85rem; }
+.tier-price-note{ color:var(--text-faint); font-size:.78rem; margin-bottom:22px; min-height:16px; }
+
+.tier-features{ list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:24px; flex:1; }
+.tier-features li{ font-size:.87rem; color:var(--text-dim); padding-left:22px; position:relative; line-height:1.5; }
+.tier-features li::before{ content:"✓"; position:absolute; left:0; font-weight:700; color:var(--teal); }
+.tier-features li.tier-features--dim{ color:var(--text-faint); }
+.tier-features li.tier-features--dim::before{ content:"—"; color:var(--text-faint); }
+
+.tier-card .main-btn{ margin-top:auto; text-align:center; }
+
+.compare-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:56px;
+  font-size:.87rem;
+}
+.compare-table th, .compare-table td{
+  padding:13px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:center;
+}
+.compare-table th:first-child, .compare-table td:first-child{
+  text-align:left;
+  color:var(--text-dim);
+}
+.compare-table thead th{
+  font-family:var(--font-display);
+  font-size:1rem;
+  color:var(--text);
+  padding-bottom:16px;
+}
+.compare-table td{ color:var(--text-faint); }
+.compare-table td.yes{ color:var(--teal); font-weight:700; }
+.compare-table tbody tr:hover td{ background:rgba(255,255,255,.02); }
+.compare-scroll{ overflow-x:auto; margin-bottom:56px; }
+.compare-scroll .compare-table{ margin-bottom:0; min-width:600px; }
+
+.member-perk-note{
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:22px 24px;
+  margin-bottom:56px;
+  color:var(--text-dim);
+  font-size:.9rem;
+  line-height:1.65;
+}
+.member-perk-note b{ color:var(--text); }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="bg-glow" id="bg"></div>
+<div class="grid-bg"></div>
+<div class="grain"></div>
+
+<header>
+  <p class="eyebrow">Independent software &amp; tools</p>
+  <h1><a href="index.html">VELLUM STUDIO</a></h1>
+  <p class="tagline">Lightweight desktop software for creators, gamers &amp; developers.</p>
+  <div class="deckle-spacer"></div>
+</header>
+<div class="deckle"></div>
+
+<nav aria-label="Primary">
+  <a class="nav-link" data-accent="navy" href="index.html">Home</a>
+  <a class="nav-link" data-accent="navy" href="about.html">About Me</a>
+  <a class="nav-link" data-accent="silver" href="tools.html">Free Tools</a>
+  <a class="nav-link" data-accent="navy" href="products.html">Products</a>
+  <a class="nav-link active" data-accent="navy" href="membership.html">Membership</a>
+  <a class="nav-link" data-accent="copper" href="arcade.html">Arcade</a>
+  <a class="nav-link" data-accent="teal" href="game_assets.html">Game Assets</a>
+  <a class="nav-link" data-accent="navy" href="roadmap.html">Roadmap</a>
+  <a class="nav-link" data-accent="navy" href="fixes.html">Fixes and notes</a>
+  <a class="nav-link" data-accent="navy" href="contact.html">Contact and legal</a>
+</nav>
+
+<main id="main-content" class="theme-navy">
+
+  <h2 class="section-title">Membership</h2>
+  <p class="section-sub">One ongoing plan instead of buying tools one at a time. Pick a tier, pick your billing, and get access through the Vellum App Launcher.</p>
+
+  <div class="billing-row">
+    <div class="billing-toggle" role="group" aria-label="Billing period">
+      <button type="button" class="billing-btn active" data-period="Yearly">Yearly</button>
+      <button type="button" class="billing-btn" data-period="Monthly">Monthly</button>
+    </div>
+    <span class="billing-save">Save with yearly billing</span>
+  </div>
+
+  <div class="tier-grid">
+
+    <!-- LIGHT -->
+    <div class="tier-card tier-card--light" aria-label="Light membership tier">
+      <span class="badge silver">LIGHT</span>
+      <h3 class="tier-name">Light</h3>
+      <p class="tier-tagline">For anyone who just wants the essentials kept up to date.</p>
+      <div class="tier-price">
+        <span class="amount" data-monthly="$4.99" data-yearly="$3.99">$4.99</span>
+        <span class="period" data-period-label>/mo</span>
+      </div>
+      <p class="tier-price-note" data-yearly-note="Billed annually">Cancel anytime</p>
+      <ul class="tier-features">
+        <li>Access to the Vellum App Launcher</li>
+        <li>All Free Tools, ad-free</li>
+        <li>Standard update channel</li>
+        <li>Community support</li>
+        <li class="tier-features--dim">Full Creator &amp; Business bundle</li>
+        <li class="tier-features--dim">Early access builds</li>
+        <li class="tier-features--dim">Priority support</li>
+      </ul>
+      <a class="main-btn btn-silver tier-cta" data-monthly-href="https://vellumtech.gumroad.com/l/tecyf" data-yearly-href="https://vellumtech.gumroad.com/l/aixzug" href="https://vellumtech.gumroad.com/l/tecyf" target="_blank" rel="noopener">Join Light</a>
+    </div>
+
+    <!-- CORE -->
+    <div class="tier-card tier-card--core" aria-label="Core membership tier, most popular">
+      <span class="tier-popular">Most Popular</span>
+      <span class="badge navy">CORE</span>
+      <h3 class="tier-name">Core</h3>
+      <p class="tier-tagline">The full Vellum lineup, always current, one login.</p>
+      <div class="tier-price">
+        <span class="amount" data-monthly="$9.99" data-yearly="$7.99">$9.99</span>
+        <span class="period" data-period-label>/mo</span>
+      </div>
+      <p class="tier-price-note" data-yearly-note="Billed annually">Cancel anytime</p>
+      <ul class="tier-features">
+        <li>Everything in Light</li>
+        <li>Full Creator Bundle (Video Editor, Audio Converter, Screen Capture, Video Clipper)</li>
+        <li>Business tools (Work Tracker &amp; more)</li>
+        <li>New products added at no extra cost</li>
+        <li>Priority bug-fix queue</li>
+        <li class="tier-features--dim">Early access builds</li>
+        <li class="tier-features--dim">Priority support</li>
+      </ul>
+      <a class="main-btn btn-navy tier-cta" data-monthly-href="https://vellumtech.gumroad.com/l/tecyf" data-yearly-href="https://vellumtech.gumroad.com/l/aixzug" href="https://vellumtech.gumroad.com/l/tecyf" target="_blank" rel="noopener">Join Core</a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="tier-card tier-card--premium" aria-label="Premium membership tier">
+      <span class="badge copper">PREMIUM</span>
+      <h3 class="tier-name">Premium</h3>
+      <p class="tier-tagline">Everything Vellum makes, plus first access and direct support.</p>
+      <div class="tier-price">
+        <span class="amount" data-monthly="$16.99" data-yearly="$13.99">$16.99</span>
+        <span class="period" data-period-label>/mo</span>
+      </div>
+      <p class="tier-price-note" data-yearly-note="Billed annually">Cancel anytime</p>
+      <ul class="tier-features">
+        <li>Everything in Core</li>
+        <li>Early access to beta builds &amp; new tools</li>
+        <li>Vellum Arcade original games, no ads</li>
+        <li>Game Assets pack included</li>
+        <li>Priority 1-on-1 support</li>
+        <li>Vote on the roadmap</li>
+        <li>Name in studio credits</li>
+      </ul>
+      <a class="main-btn btn-copper tier-cta" data-monthly-href="https://vellumtech.gumroad.com/l/tecyf" data-yearly-href="https://vellumtech.gumroad.com/l/aixzug" href="https://vellumtech.gumroad.com/l/tecyf" target="_blank" rel="noopener">Join Premium</a>
+    </div>
+
+  </div>
+
+  <h2 class="section-title" style="margin-top:8px">Compare plans</h2>
+  <p class="section-sub">A closer look at what each tier unlocks.</p>
+  <div class="compare-scroll">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Light</th>
+          <th>Core</th>
+          <th>Premium</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Vellum App Launcher</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Free Tools, ad-free</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Creator Bundle (Video Editor, Audio Converter, Screen Capture, Clipper)</td><td>—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Business tools (Work Tracker &amp; more)</td><td>—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>New products included going forward</td><td>—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Early access / beta builds</td><td>—</td><td>—</td><td class="yes">✓</td></tr>
+        <tr><td>Arcade originals, ad-free</td><td>—</td><td>—</td><td class="yes">✓</td></tr>
+        <tr><td>Game Assets pack</td><td>—</td><td>—</td><td class="yes">✓</td></tr>
+        <tr><td>Support level</td><td>Community</td><td>Priority queue</td><td>1-on-1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="member-perk-note">
+    <b>How it works:</b> membership is billed and managed through Gumroad. After joining, sign in with the same email inside the Vellum App Launcher to unlock your tier — everything you're entitled to shows up there automatically, no separate downloads needed. Switching tiers or billing periods later just means joining the new plan; cancel the old one from your Gumroad account whenever you like.
+  </div>
+
+  <h2 class="section-title">Membership FAQ</h2>
+  <p class="section-sub">Quick answers to the most common questions.</p>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>Can I switch tiers later? <span class="chevron">+</span></summary>
+      <p>Yes. Join the new tier on Gumroad, sign back into the Launcher, and your access updates automatically. Cancel your old plan from Gumroad whenever you're ready.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What happens if I cancel? <span class="chevron">+</span></summary>
+      <p>You keep access until the end of your current billing period, then the account drops back to the Free Tools tier. No surprise charges.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is this different from just buying a product outright? <span class="chevron">+</span></summary>
+      <p>Some Vellum tools are also sold as one-time purchases through the <a href="products.html">Products</a> page. Membership is for people who want the whole, growing lineup kept current under one plan instead of buying each tool separately.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need to install anything extra? <span class="chevron">+</span></summary>
+      <p>No — membership works through the same <a href="index.html#dependencies-card">Vellum App Launcher</a> every product uses. Sign in once and your tier unlocks what you're entitled to.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is yearly billing actually cheaper? <span class="chevron">+</span></summary>
+      <p>Yes — yearly billing is discounted versus paying monthly for twelve months. Toggle "Yearly" above to see the per-month equivalent for each tier.</p>
+    </details>
+  </div>
+
+</main>
+
+<footer>
+  <p>Vellum Studio &bull; <a href="products.html">Products</a> &bull; <a href="membership.html">Membership</a> &bull; <a href="tools.html">Tools</a></p>
+  <p style="margin-top:6px">&#169; 2026 Vellum Studio — All Rights Reserved</p>
+</footer>
+
+<script>
+const secret = [];
+document.addEventListener("keydown", e => {
+  secret.push(e.key.toLowerCase());
+  if(secret.slice(-6).join("") === "vellum")
+    document.body.classList.toggle("secret-mode");
+});
+</script>
+
+<script>
+(function(){
+  const btns = document.querySelectorAll(".billing-btn");
+  const amounts = document.querySelectorAll(".tier-price .amount");
+  const periodLabels = document.querySelectorAll("[data-period-label]");
+  const priceNotes = document.querySelectorAll(".tier-price-note");
+  const ctas = document.querySelectorAll(".tier-cta");
+
+  function setPeriod(period){
+    btns.forEach(b => b.classList.toggle("active", b.dataset.period === period));
+
+    amounts.forEach(el => {
+      el.textContent = period === "yearly" ? el.dataset.yearly : el.dataset.monthly;
+    });
+    periodLabels.forEach(el => { el.textContent = period === "yearly" ? "/mo, billed yearly" : "/mo"; });
+    priceNotes.forEach(el => {
+      el.textContent = period === "yearly" ? (el.dataset.yearlyNote || "Billed annually") : "Cancel anytime";
+    });
+    ctas.forEach(el => {
+      el.href = period === "yearly" ? el.dataset.yearlyHref : el.dataset.monthlyHref;
+    });
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => setPeriod(btn.dataset.period));
+  });
+
+  setPeriod("monthly");
+})();
+</script>
+</body>
+</html>
