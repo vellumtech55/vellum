@@ -148,72 +148,6 @@ header p.tagline{
   font-style:italic;
 }
 
-.header-countdown{
-  display:inline-flex;
-  align-items:center;
-  gap:14px;
-  margin:26px auto 0;
-  padding:10px 22px;
-  border-radius:100px;
-  background:rgba(90,127,184,.07);
-  border:1px solid var(--navy-dim);
-  box-shadow:0 0 30px rgba(90,127,184,.10), inset 0 0 18px rgba(90,127,184,.05);
-}
-
-.header-countdown .hc-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--navy);
-  box-shadow:0 0 8px 2px var(--navy-dim);
-  animation:hc-pulse 2s ease-in-out infinite;
-  flex-shrink:0;
-}
-@keyframes hc-pulse{
-  0%,100%{ opacity:1; }
-  50%{ opacity:.35; }
-}
-
-.header-countdown .hc-label{
-  font-size:.72rem;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--text-faint);
-  font-weight:600;
-  white-space:nowrap;
-}
-
-.header-countdown .hc-time{
-  display:flex;
-  align-items:baseline;
-  gap:3px;
-  font-family:var(--font-display);
-  font-weight:700;
-  color:var(--text);
-  font-variant-numeric:tabular-nums;
-}
-.header-countdown .hc-time .hc-num{ font-size:1.05rem; }
-.header-countdown .hc-time .hc-unit{
-  font-family:var(--font-body);
-  font-size:.68rem;
-  color:var(--text-faint);
-  font-weight:600;
-  margin-right:6px;
-}
-.header-countdown .hc-time .hc-unit:last-child{ margin-right:0; }
-.header-countdown .hc-sep{ color:var(--navy); opacity:.5; }
-
-@media(max-width:560px){
-  .header-countdown{
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:8px 14px;
-    padding:12px 20px;
-    margin-top:20px;
-  }
-  .header-countdown .hc-sep{ display:none; }
-}
-
 .hero{
   max-width:780px;
   margin:36px auto 0;
@@ -555,7 +489,6 @@ footer a:hover{ color:var(--navy); }
 .faq-item[open] summary .chevron{ transform:rotate(45deg); }
 .faq-item p{ padding:0 20px 18px; color:var(--text-dim); font-size:.88rem; line-height:1.6; }
 
-.secret-mode{ filter:hue-rotate(180deg); }
 
 .skip-link{
   position:absolute;
@@ -588,6 +521,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 
 </style>
+<link rel="stylesheet" href="vellum.css">
+<script src="vellum.js" defer></script>
 </head>
 <body>
 
@@ -601,17 +536,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <p class="eyebrow">Independent software &amp; tools</p>
   <h1><a href="index.html">VELLUM STUDIO</a></h1>
   <p class="tagline">Lightweight desktop software for creators, gamers &amp; developers.</p>
-
-  <div class="header-countdown" aria-label="Countdown to next update">
-    <span class="hc-dot" aria-hidden="true"></span>
-    <span class="hc-label">Next Update</span>
-    <span class="hc-time">
-      <span class="hc-num" id="hc-days">00</span><span class="hc-unit">d</span><span class="hc-sep">:</span>
-      <span class="hc-num" id="hc-hours">00</span><span class="hc-unit">h</span><span class="hc-sep">:</span>
-      <span class="hc-num" id="hc-mins">00</span><span class="hc-unit">m</span><span class="hc-sep">:</span>
-      <span class="hc-num" id="hc-secs">00</span><span class="hc-unit">s</span>
-    </span>
-  </div>
 
   <div class="hero">
     <h2>Featured Project</h2>
@@ -629,7 +553,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <a class="nav-link" data-accent="navy" href="products.html">Products</a>
   <a class="nav-link" data-accent="navy" href="membership.html">Membership</a>
   <a class="nav-link" data-accent="copper" href="arcade.html">Arcade</a>
-  <a class="nav-link" data-accent="teal" href="game_assets.html">Game Assets</a>
   <a class="nav-link" data-accent="navy" href="roadmap.html">Roadmap</a>
   <a class="nav-link" data-accent="navy" href="fixes.html">Fixes and notes</a>
   <a class="nav-link" data-accent="navy" href="contact.html">Contact and legal</a>
@@ -637,7 +560,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 
 <main id="main-content" class="theme-navy">
   <div class="notice-banner notice-copper" role="note">
-    <span aria-hidden="true">⚠️</span>
     <span>Heads up: Vellum apps are built with PyInstaller, so Windows Defender/SmartScreen may flag the installers as "unrecognized" — this is a common false positive for small, unsigned indie tools, not a sign of malware. <a href="fixes.html">See Fixes and notes</a> for how to safely proceed.</span>
   </div>
 
@@ -647,8 +569,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     <div class="card stat-card"><h3>8+</h3><p>Tools Released</p></div>
     <div class="card stat-card"><h3>100%</h3><p>Independent</p></div>
     <div class="card stat-card"><h3>Python</h3><p>Main programming language</p></div>
-    <div class="card stat-card"><h3>&#8734;</h3><p>Ideas</p></div>
-    <div class="card stat-card"><h3>100%</h3><p>Safe</p></div>
+    <div class="card stat-card"><h3>Free</h3><p>Browser games &amp; web tools</p></div>
+    <div class="card stat-card"><h3>Windows</h3><p>Desktop software</p></div>
   </div>
 
   <h2 class="section-title" style="margin-top:48px">Start Here</h2>
@@ -728,45 +650,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <p style="margin-top:6px">&#169; 2026 Vellum Studio — All Rights Reserved</p>
 </footer>
 
-<script>
-const secret = [];
-document.addEventListener("keydown", e => {
-  secret.push(e.key.toLowerCase());
-  if(secret.slice(-6).join("") === "vellum")
-    document.body.classList.toggle("secret-mode");
-});
 
-</script>
-
-<script>
-(function(){
-  // Anchor date for the update cycle — change this to your last real
-  // release date any time; the countdown keeps looping from it forever.
-  const CYCLE_START = new Date("2026-07-22T00:00:00Z").getTime();
-  const CYCLE_DAYS  = 45; // 1.5 months
-  const CYCLE_MS    = CYCLE_DAYS * 24 * 60 * 60 * 1000;
-
-  const elDays  = document.getElementById("hc-days");
-  const elHours = document.getElementById("hc-hours");
-  const elMins  = document.getElementById("hc-mins");
-  const elSecs  = document.getElementById("hc-secs");
-
-  function pad(n){ return String(n).padStart(2,"0"); }
-
-  function tick(){
-    const now = Date.now();
-    const elapsedInCycle = (now - CYCLE_START) % CYCLE_MS;
-    const remaining = CYCLE_MS - elapsedInCycle;
-
-    elDays.textContent  = pad(Math.floor(remaining / 86400000));
-    elHours.textContent = pad(Math.floor((remaining / 3600000) % 24));
-    elMins.textContent  = pad(Math.floor((remaining / 60000) % 60));
-    elSecs.textContent  = pad(Math.floor((remaining / 1000) % 60));
-  }
-
-  tick();
-  setInterval(tick, 1000);
-})();
-</script>
 </body>
 </html>

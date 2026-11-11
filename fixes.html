@@ -489,7 +489,6 @@ footer a:hover{ color:var(--navy); }
 .faq-item[open] summary .chevron{ transform:rotate(45deg); }
 .faq-item p{ padding:0 20px 18px; color:var(--text-dim); font-size:.88rem; line-height:1.6; }
 
-.secret-mode{ filter:hue-rotate(180deg); }
 
 .skip-link{
   position:absolute;
@@ -522,6 +521,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 
 </style>
+<link rel="stylesheet" href="vellum.css">
+<script src="vellum.js" defer></script>
 </head>
 <body>
 
@@ -546,7 +547,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <a class="nav-link" data-accent="navy" href="products.html">Products</a>
   <a class="nav-link" data-accent="navy" href="membership.html">Membership</a>
   <a class="nav-link" data-accent="copper" href="arcade.html">Arcade</a>
-  <a class="nav-link" data-accent="teal" href="game_assets.html">Game Assets</a>
   <a class="nav-link" data-accent="navy" href="roadmap.html">Roadmap</a>
   <a class="nav-link active" data-accent="navy" href="fixes.html">Fixes and notes</a>
   <a class="nav-link" data-accent="navy" href="contact.html">Contact and legal</a>
@@ -576,14 +576,5 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <p style="margin-top:6px">&#169; 2026 Vellum Studio — All Rights Reserved</p>
 </footer>
 
-<script>
-const secret = [];
-document.addEventListener("keydown", e => {
-  secret.push(e.key.toLowerCase());
-  if(secret.slice(-6).join("") === "vellum")
-    document.body.classList.toggle("secret-mode");
-});
-
-</script>
 </body>
 </html>

@@ -489,7 +489,6 @@ footer a:hover{ color:var(--navy); }
 .faq-item[open] summary .chevron{ transform:rotate(45deg); }
 .faq-item p{ padding:0 20px 18px; color:var(--text-dim); font-size:.88rem; line-height:1.6; }
 
-.secret-mode{ filter:hue-rotate(180deg); }
 
 .skip-link{
   position:absolute;
@@ -663,6 +662,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 .member-perk-note b{ color:var(--text); }
 </style>
+<link rel="stylesheet" href="vellum.css">
+<script src="vellum.js" defer></script>
 </head>
 <body>
 
@@ -687,7 +688,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <a class="nav-link" data-accent="navy" href="products.html">Products</a>
   <a class="nav-link active" data-accent="navy" href="membership.html">Membership</a>
   <a class="nav-link" data-accent="copper" href="arcade.html">Arcade</a>
-  <a class="nav-link" data-accent="teal" href="game_assets.html">Game Assets</a>
   <a class="nav-link" data-accent="navy" href="roadmap.html">Roadmap</a>
   <a class="nav-link" data-accent="navy" href="fixes.html">Fixes and notes</a>
   <a class="nav-link" data-accent="navy" href="contact.html">Contact and legal</a>
@@ -767,7 +767,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
         <li>Everything in Core</li>
         <li>Early access to beta builds &amp; new tools</li>
         <li>Vellum Arcade original games, no ads</li>
-        <li>Game Assets pack included</li>
         <li>Priority 1-on-1 support</li>
         <li>Vote on the roadmap</li>
         <li>Name in studio credits</li>
@@ -797,7 +796,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
         <tr><td>New products included going forward</td><td>—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
         <tr><td>Early access / beta builds</td><td>—</td><td>—</td><td class="yes">✓</td></tr>
         <tr><td>Arcade originals, ad-free</td><td>—</td><td>—</td><td class="yes">✓</td></tr>
-        <tr><td>Game Assets pack</td><td>—</td><td>—</td><td class="yes">✓</td></tr>
         <tr><td>Support level</td><td>Community</td><td>Priority queue</td><td>1-on-1</td></tr>
       </tbody>
     </table>
@@ -839,14 +837,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   <p style="margin-top:6px">&#169; 2026 Vellum Studio — All Rights Reserved</p>
 </footer>
 
-<script>
-const secret = [];
-document.addEventListener("keydown", e => {
-  secret.push(e.key.toLowerCase());
-  if(secret.slice(-6).join("") === "vellum")
-    document.body.classList.toggle("secret-mode");
-});
-</script>
 
 <script>
 (function(){
